@@ -1,34 +1,37 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package task
 
 import (
-	"time"
-	"fmt"
 	"errors"
+	"fmt"
+	"time"
 )
 
 type (
 	//LoopTask loop task info define
 	LoopTask struct {
 		TaskInfo
-		Interval     int64        `json:"interval"` //运行间隔时间，单位毫秒，当TaskType==TaskType_Loop||TaskType_Queue时有效
+		Interval int64 `json:"interval"` //运行间隔时间，单位毫秒，当TaskType==TaskType_Loop||TaskType_Queue时有效
 	}
-
 )
 
 // GetConfig get task config info
-func (task *LoopTask) GetConfig() *TaskConfig{
+func (task *LoopTask) GetConfig() *TaskConfig {
 	return &TaskConfig{
-		TaskID:task.taskID,
-		TaskType:task.TaskType,
-		IsRun : task.IsRun,
-		Handler:task.handler,
-		DueTime:task.DueTime,
-		Interval:task.Interval,
-		Express:"",
-		TaskData:task.Context().TaskData,
+		TaskID:   task.taskID,
+		TaskType: task.TaskType,
+		IsRun:    task.IsRun,
+		Handler:  task.handler,
+		DueTime:  task.DueTime,
+		Interval: task.Interval,
+		Express:  "",
+		TaskData: task.Context().TaskData,
 	}
 }
-
 
 //Reset first check conf, then reload conf & restart task
 //special, TaskID can not be reset
@@ -62,7 +65,6 @@ func (task *LoopTask) Reset(conf *TaskConfig) error {
 	return nil
 }
 
-
 //Start start task
 func (task *LoopTask) Start() {
 	if !task.IsRun {
@@ -78,7 +80,6 @@ func (task *LoopTask) Start() {
 	}
 }
 
-
 // RunOnce do task only once
 // no match Express or Interval
 // no recover panic
@@ -87,7 +88,6 @@ func (task *LoopTask) RunOnce() error {
 	err := task.handler(task.context)
 	return err
 }
-
 
 //start loop task
 func startLoopTask(task *LoopTask) {

@@ -1,9 +1,15 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package main
 
 import (
 	"fmt"
-	. "github.com/devfeel/dottask"
 	"time"
+
+	. "github.com/sniperkit/snk.fork.dottask"
 )
 
 var service *TaskService

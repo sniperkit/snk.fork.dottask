@@ -1,26 +1,30 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package task
 
 import (
-	"time"
-	"fmt"
 	"errors"
+	"fmt"
+	"time"
 )
-
 
 const (
 	DefaultQueueSize = 1000
 )
-type(
-	QueueTask struct{
+
+type (
+	QueueTask struct {
 		TaskInfo
-		Interval     int64        //运行间隔时间，单位毫秒，当TaskType==TaskType_Loop||TaskType_Queue时有效
+		Interval    int64 //运行间隔时间，单位毫秒，当TaskType==TaskType_Loop||TaskType_Queue时有效
 		MessageChan chan interface{}
 	}
 )
 
-
 //EnQueue enqueue value into message queue
-func (task *QueueTask) EnQueue(value interface{}){
+func (task *QueueTask) EnQueue(value interface{}) {
 	task.MessageChan <- value
 }
 
@@ -43,16 +47,16 @@ func (task *QueueTask) RunOnce() error {
 }
 
 // GetConfig get task config info
-func (task *QueueTask) GetConfig() *TaskConfig{
+func (task *QueueTask) GetConfig() *TaskConfig {
 	return &TaskConfig{
-		TaskID:task.taskID,
-		TaskType:task.TaskType,
-		IsRun : task.IsRun,
-		Handler:task.handler,
-		DueTime:task.DueTime,
-		Interval:0,
-		Express:"",
-		TaskData:task.Context().TaskData,
+		TaskID:   task.taskID,
+		TaskType: task.TaskType,
+		IsRun:    task.IsRun,
+		Handler:  task.handler,
+		DueTime:  task.DueTime,
+		Interval: 0,
+		Express:  "",
+		TaskData: task.Context().TaskData,
 	}
 }
 
@@ -91,7 +95,7 @@ func startQueueTask(task *QueueTask) {
 		}()
 
 		//get value from message chan
-		message :=<- task.MessageChan
+		message := <-task.MessageChan
 		task.Context().Message = message
 
 		if task.taskService.OnBeforHandler != nil {

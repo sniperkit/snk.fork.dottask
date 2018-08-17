@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package task
 
 import (
@@ -6,6 +11,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
 	"gopkg.in/yaml.v2"
 )
 

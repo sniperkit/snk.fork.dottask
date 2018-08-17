@@ -1,3 +1,8 @@
+/*
+Sniperkit-Bot
+- Status: analyzed
+*/
+
 package task
 
 import (
@@ -17,8 +22,8 @@ const (
 )
 
 const (
-	TaskType_Loop = "loop"
-	TaskType_Cron = "cron"
+	TaskType_Loop  = "loop"
+	TaskType_Cron  = "cron"
 	TaskType_Queue = "queue"
 )
 
@@ -39,8 +44,6 @@ type (
 		SetTaskService(service *TaskService)
 		Reset(conf *TaskConfig) error
 	}
-
-
 
 	ExceptionHandleFunc func(*TaskContext, error)
 
@@ -226,7 +229,7 @@ func (service *TaskService) CreateLoopTask(taskID string, isRun bool, dueTime in
 }
 
 // CreateQueueTask create new queuetask
-func (service *TaskService) CreateQueueTask(taskID string, isRun bool, interval int64, handler TaskHandle, taskData interface{}, queueSize int) (Task, error){
+func (service *TaskService) CreateQueueTask(taskID string, isRun bool, interval int64, handler TaskHandle, taskData interface{}, queueSize int) (Task, error) {
 	context := new(TaskContext)
 	context.TaskID = taskID
 	context.TaskData = taskData
@@ -245,8 +248,6 @@ func (service *TaskService) CreateQueueTask(taskID string, isRun bool, interval 
 	service.AddTask(task)
 	return task, nil
 }
-
-
 
 // GetTask get TaskInfo by TaskID
 func (service *TaskService) GetTask(taskID string) (t Task, exists bool) {
